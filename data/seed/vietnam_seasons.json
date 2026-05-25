@@ -1,0 +1,5 @@
+[
+  {"region": "north", "destinations": ["hanoi", "halong", "sapa"], "dry_season": "Nov-Apr", "monsoon": "May-Oct", "best_travel": "Feb-May", "monsoon_severity": "hot_wet"},
+  {"region": "central", "destinations": ["danang", "hoian", "hue"], "dry_season": "Feb-Aug", "monsoon": "Sep-Jan", "best_travel": "Feb-May", "monsoon_severity": "heavy_rain"},
+  {"region": "south", "destinations": ["hcmc", "mekong", "phuquoc", "nhatrang", "dalat"], "dry_season": "Nov-Apr", "monsoon": "May-Oct", "best_travel": "Nov-Apr", "monsoon_severity": "hot_wet"}
+]

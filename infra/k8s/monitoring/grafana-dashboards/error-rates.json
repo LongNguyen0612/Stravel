@@ -1,0 +1,11 @@
+{
+  "dashboard": {
+    "title": "STravel — Error Rates",
+    "panels": [
+      {"title": "HTTP Error Rate (5xx)", "type": "graph", "targets": [{"expr": "rate(stravel_http_requests_total{status_code=~'5..'}[5m]) / rate(stravel_http_requests_total[5m])"}]},
+      {"title": "Agent Error Rate", "type": "graph", "targets": [{"expr": "rate(stravel_agent_errors_total[5m])"}]},
+      {"title": "Errors by Endpoint", "type": "table", "targets": [{"expr": "topk(10, sum by (endpoint) (rate(stravel_http_requests_total{status_code=~'5..'}[5m])))"}]},
+      {"title": "LLM Failures", "type": "stat", "targets": [{"expr": "rate(stravel_llm_request_seconds_count{status='error'}[5m])"}]}
+    ]
+  }
+}

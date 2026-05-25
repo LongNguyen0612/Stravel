@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stravel-config
+  namespace: stravel
+data:
+  ENVIRONMENT: "production"
+  API_V1_PREFIX: "/api/v1"
+  OLLAMA_BASE_URL: "http://stravel-vllm:8001"
+  LLM_BACKEND: "vllm"
+  VLLM_BASE_URL: "http://stravel-vllm:8001"
+  LLM_MODEL: "Qwen/Qwen2.5-7B"
+  QDRANT_URL: "http://stravel-qdrant:6333"
+  REDIS_URL: "redis://stravel-redis:6379"
+  OTEL_SERVICE_NAME: "stravel-backend"
+  OTEL_EXPORTER_OTLP_ENDPOINT: "http://stravel-otel-collector:4317"
+  LOG_LEVEL: "INFO"
+  CORS_ORIGINS: '["https://stravel.example.com"]'

@@ -1,0 +1,12 @@
+{
+  "dashboard": {
+    "title": "STravel — Agent Performance",
+    "panels": [
+      {"title": "Agent Execution Time", "type": "heatmap", "targets": [{"expr": "rate(stravel_agent_execution_seconds_bucket[5m])"}]},
+      {"title": "Agent Errors", "type": "graph", "targets": [{"expr": "rate(stravel_agent_errors_total[5m])"}]},
+      {"title": "LLM Token Usage", "type": "graph", "targets": [{"expr": "rate(stravel_llm_tokens_total[5m])"}]},
+      {"title": "LLM Latency p95", "type": "graph", "targets": [{"expr": "histogram_quantile(0.95, rate(stravel_llm_request_seconds_bucket[5m]))"}]},
+      {"title": "Cache Hit Rate", "type": "gauge", "targets": [{"expr": "rate(stravel_cache_requests_total{result='hit'}[5m]) / rate(stravel_cache_requests_total[5m])"}]}
+    ]
+  }
+}

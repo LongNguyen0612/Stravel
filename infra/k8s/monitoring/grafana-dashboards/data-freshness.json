@@ -1,0 +1,10 @@
+{
+  "dashboard": {
+    "title": "STravel — Data Freshness",
+    "panels": [
+      {"title": "Freshness Ratio by Type", "type": "gauge", "targets": [{"expr": "stravel_entity_freshness_ratio"}]},
+      {"title": "Stale Entity Count", "type": "graph", "targets": [{"expr": "stravel_stale_entities_total"}]},
+      {"title": "Entities by Type", "type": "table", "targets": [{"expr": "count by (entity_type) (stravel_entity_freshness_ratio)"}]}
+    ]
+  }
+}

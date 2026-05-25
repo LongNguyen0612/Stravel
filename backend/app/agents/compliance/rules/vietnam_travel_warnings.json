@@ -1,0 +1,10 @@
+[
+  {
+    "type": "travel_warning",
+    "name": "Vietnam Travel Advisory",
+    "level": "exercise_normal_precautions",
+    "description": "Exercise normal safety precautions. Petty crime in tourist areas.",
+    "source_url": "https://travel.state.gov/vietnam",
+    "last_verified": "2026-05-01"
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "dashboard": {
+    "title": "STravel — System Health",
+    "panels": [
+      {"title": "Request Rate", "type": "graph", "targets": [{"expr": "rate(stravel_http_requests_total[5m])"}]},
+      {"title": "Error Rate", "type": "stat", "targets": [{"expr": "rate(stravel_http_requests_total{status_code=~'5..'}[5m]) / rate(stravel_http_requests_total[5m])"}]},
+      {"title": "Request Latency p95", "type": "graph", "targets": [{"expr": "histogram_quantile(0.95, rate(stravel_http_request_duration_seconds_bucket[5m]))"}]},
+      {"title": "Active Sessions", "type": "stat", "targets": [{"expr": "stravel_active_sessions"}]}
+    ]
+  }
+}
