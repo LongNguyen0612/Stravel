@@ -42,7 +42,8 @@ services:
 
   redis:
     image: redis:7-alpine
-    # No host port binding — only reachable within the Docker network (avoids conflict with other Redis containers)
+    ports:
+      - "6379:6379"
     volumes:
       - redis_data:/data
     healthcheck:
@@ -56,34 +57,6 @@ services:
           cpus: '0.25'
           memory: 256M
 
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
-    environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-stravel}:${POSTGRES_PASSWORD:-stravel_dev}@db:5432/${POSTGRES_DB:-stravel}
-      OLLAMA_BASE_URL: http://ollama:11434
-      LLM_MODEL: ${LLM_MODEL:-qwen2.5:14b}
-      ENVIRONMENT: development
-      SECRET_KEY: ${SECRET_KEY:-dev-secret-key-change-in-production}
-      REDIS_URL: redis://redis:6379
-    depends_on:
-      db:
-        condition: service_healthy
-      ollama:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    volumes:
-      - ./backend:/app
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --timeout-graceful-shutdown 3
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 2G
 
 volumes:
   postgres_data:
