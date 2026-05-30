@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MessageBubble } from "../shared/MessageBubble";
 import { TypingIndicator } from "../shared/TypingIndicator";
+import { classifyFirstMessage } from "../../constants/destinations";
 
 interface Message {
   role: "user" | "assistant";
@@ -11,18 +12,46 @@ interface Props {
   messages: Message[];
   onSendMessage: (message: string) => void;
   isLoading: boolean;
+  sessionId?: string;
+  onProposeFirst?: (sessionId: string, message: string) => Promise<void>;
 }
 
-export function ChatInterface({ messages, onSendMessage, isLoading }: Props) {
+export function ChatInterface({ messages, onSendMessage, isLoading, sessionId, onProposeFirst }: Props) {
   const [input, setInput] = useState("");
+  const [pendingUserMessage, setPendingUserMessage] = useState<string | null>(null);
+  const hasMessagedRef = useRef(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    hasMessagedRef.current = false;
+    setPendingUserMessage(null);
+  }, [sessionId]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (input.trim()) {
-      onSendMessage(input.trim());
-      setInput("");
+    const text = input.trim();
+    if (!text) return;
+    setInput("");
+
+    const isFirst = !hasMessagedRef.current;
+
+    if (isFirst && sessionId && onProposeFirst && classifyFirstMessage(text)) {
+      setPendingUserMessage(text);
+      try {
+        await onProposeFirst(sessionId, text);
+        hasMessagedRef.current = true;
+      } catch {
+        hasMessagedRef.current = false;
+        setPendingUserMessage(null);
+      }
+    } else {
+      hasMessagedRef.current = true;
+      onSendMessage(text);
     }
   };
+
+  const displayMessages: Message[] = pendingUserMessage
+    ? [{ role: "user", content: pendingUserMessage }, ...messages]
+    : messages;
 
   return (
     <div data-testid="chat-interface">
@@ -30,8 +59,8 @@ export function ChatInterface({ messages, onSendMessage, isLoading }: Props) {
         data-testid="chat-messages"
         style={{ minHeight: "400px", maxHeight: "60vh", overflow: "auto", padding: "16px" }}
       >
-        {messages.map((msg, i) => (
-          <MessageBubble key={i} sender={msg.role === "user" ? "user" : "agent"}>
+        {displayMessages.map((msg, i) => (
+          <MessageBubble key={i} role={msg.role === "user" ? "user" : "bot"}>
             {msg.content}
           </MessageBubble>
         ))}

@@ -8,7 +8,7 @@ async def test_create_session(async_client):
     response = await async_client.post("/api/v1/advisory_sessions", json={})
     assert response.status_code == 201
     data = response.json()
-    assert data["status"] == "in_progress"
+    assert data["status"] == "pending"
     assert data["tenant_id"] == "default"
     assert data["traveler_profile"] is not None
     assert "id" in data
@@ -42,10 +42,10 @@ async def test_update_session_status(async_client):
 
     response = await async_client.patch(
         f"/api/v1/advisory_sessions/{session_id}",
-        json={"status": "completed"},
+        json={"status": "confirmed"},
     )
     assert response.status_code == 200
-    assert response.json()["status"] == "completed"
+    assert response.json()["status"] == "confirmed"
 
 
 @pytest.mark.asyncio
@@ -53,13 +53,13 @@ async def test_update_session_invalid_transition(async_client):
     create_resp = await async_client.post("/api/v1/advisory_sessions", json={})
     session_id = create_resp.json()["id"]
 
-    # Complete it first
-    await async_client.patch(f"/api/v1/advisory_sessions/{session_id}", json={"status": "completed"})
+    # Confirm it first
+    await async_client.patch(f"/api/v1/advisory_sessions/{session_id}", json={"status": "confirmed"})
 
-    # Try to go back to in_progress — invalid
+    # Try to go back to pending — invalid
     response = await async_client.patch(
         f"/api/v1/advisory_sessions/{session_id}",
-        json={"status": "in_progress"},
+        json={"status": "pending"},
     )
     assert response.status_code == 422
 
@@ -77,3 +77,20 @@ async def test_list_sessions(async_client):
     assert len(data["items"]) >= 2
     assert "limit" in data
     assert "offset" in data
+
+
+@pytest.mark.asyncio
+async def test_get_events_returns_empty_list_for_new_session(async_client):
+    create_resp = await async_client.post("/api/v1/advisory_sessions", json={})
+    session_id = create_resp.json()["id"]
+
+    response = await async_client.get(f"/api/v1/advisory_sessions/{session_id}/events")
+    assert response.status_code == 200
+    assert response.json() == []
+
+
+@pytest.mark.asyncio
+async def test_get_events_returns_404_for_unknown_session(async_client):
+    fake_id = "00000000-0000-0000-0000-000000000001"
+    response = await async_client.get(f"/api/v1/advisory_sessions/{fake_id}/events")
+    assert response.status_code == 404

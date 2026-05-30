@@ -11,16 +11,16 @@ export function ExportButton({ sessionId, disabled }: Props) {
   const handleExport = async () => {
     setLoading(true);
     try {
+      // eslint-disable-next-line no-restricted-globals -- demo endpoint not in apiClient.ts
       const response = await fetch(`/api/v1/demo/sessions/${sessionId}/export`);
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `stravel-proposal-${sessionId.slice(0, 8)}.pdf`;
-        a.click();
-        URL.revokeObjectURL(url);
-      }
+      if (!response.ok) throw new Error(`Export failed: ${response.status}`);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `stravel-proposal-${sessionId.slice(0, 8)}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
     } finally {
       setLoading(false);
     }

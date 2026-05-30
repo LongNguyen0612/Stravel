@@ -1,71 +1,113 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@import './tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background: var(--color-surface);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  color: #1f2937;
-  background: #ffffff;
+@layer components {
+  /* Legacy classes preserved for existing B2B components (App.tsx era).
+     New Chat-First UI components must use Tailwind utility classes only. */
+
+  .stream-message {
+    @apply p-3 mb-2 bg-surface-2 rounded-lg;
+  }
+
+  .typing-indicator {
+    @apply flex gap-1 p-2;
+  }
+
+  .typing-indicator .dot {
+    @apply w-2 h-2 bg-text-muted rounded-full;
+    animation: typing-bounce 1.4s infinite ease-in-out;
+  }
+
+  .typing-indicator .dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-indicator .dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  .message-bubble {
+    @apply px-3.5 py-2.5 my-2 rounded-xl max-w-[80%];
+  }
+
+  .message-bubble--bot {
+    @apply bg-surface-2 self-start border-l-[3px] border-teal-600;
+  }
+
+  .message-bubble--user {
+    @apply bg-primary text-white self-end;
+  }
+
+  .message-bubble--stage-narrator {
+    @apply text-slate-400 text-xs self-stretch text-center my-1 px-0 py-1 bg-transparent rounded-none max-w-full;
+  }
 }
 
-button {
-  padding: 8px 16px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background: #ffffff;
-  cursor: pointer;
-  font-size: 14px;
+@keyframes typing-bounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
 }
 
-button:hover {
-  background: #f3f4f6;
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
-.stream-message {
-  padding: 12px;
-  margin-bottom: 8px;
-  background: #f3f4f6;
-  border-radius: 8px;
+/* Card settle transition: reduced-motion override — 150ms opacity fade instead of spring */
+@media (prefers-reduced-motion: reduce) {
+  .transition-card-settle {
+    transition: opacity 150ms ease-out !important;
+  }
 }
 
-.typing-indicator {
-  display: flex;
-  gap: 4px;
-  padding: 8px;
+@keyframes compliance-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.6); }
+  100% { box-shadow: 0 0 0 12px rgba(251, 191, 36, 0); }
 }
 
-.typing-indicator .dot {
-  width: 8px;
-  height: 8px;
-  background: #9ca3af;
-  border-radius: 50%;
-  animation: bounce 1.4s infinite ease-in-out;
+.compliance-highlight {
+  animation: compliance-pulse 150ms ease-out forwards;
 }
 
-.typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
-.typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes bounce {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1); }
-}
-
-.message-bubble {
-  padding: 10px 14px;
-  margin: 8px 0;
-  border-radius: 12px;
-  max-width: 80%;
-}
-
-.message-bubble--agent {
-  background: #e5e7eb;
-  align-self: flex-start;
-}
-
-.message-bubble--user {
-  background: #3b82f6;
-  color: white;
-  align-self: flex-end;
+@media (prefers-reduced-motion: reduce) {
+  .compliance-highlight {
+    animation: none;
+  }
 }

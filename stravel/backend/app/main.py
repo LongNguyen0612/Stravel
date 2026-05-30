@@ -5,10 +5,13 @@ from app.api.v1.router import api_router
 from app.core.config import settings
 from app.core.exceptions import AppError, app_error_handler, unhandled_error_handler
 from app.core.middleware import request_logging_middleware, setup_opentelemetry, setup_structlog
+from app.services.event_bus import register_hooks
+from app.services.event_persistence import delete_session_events, persist_event
 
 
 def create_app() -> FastAPI:
     setup_structlog()
+    register_hooks(persist=persist_event, clear=delete_session_events)
 
     app = FastAPI(
         title="STravel API",

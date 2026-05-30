@@ -3,18 +3,17 @@ interface Props {
   label: string;
 }
 
-const COLORS = {
-  block: "#dc2626",
-  warning: "#f59e0b",
-  pass: "#22c55e",
+const SEVERITY_CLASSES: Record<Props["severity"], string> = {
+  block: "bg-status-flagged text-white",
+  warning: "bg-status-pending text-white",
+  pass: "bg-status-confirmed text-white",
 };
 
 export function ComplianceBadge({ severity, label }: Props) {
   return (
     <span
       data-testid="compliance-badge"
-      className="compliance-badge"
-      style={{ backgroundColor: COLORS[severity], color: "#fff", padding: "2px 8px", borderRadius: "4px", fontSize: "12px" }}
+      className={`compliance-badge inline-block px-2 py-0.5 rounded text-xs ${SEVERITY_CLASSES[severity]}`}
     >
       {label}
     </span>

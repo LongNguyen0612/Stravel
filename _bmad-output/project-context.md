@@ -1,15 +1,15 @@
 ---
 project_name: 'STravel'
 user_name: 'Fred'
-date: '2026-05-25'
-status: 'ALL 6 EPICS COMPLETE — 31/31 stories'
-sections_completed: ['technology_stack', 'language_rules', 'framework_rules', 'testing_rules', 'code_quality', 'workflow_rules', 'critical_rules', 'epic_2_rules', 'epic_3_rules', 'epic_4_rules', 'epic_5_rules', 'epic_6_rules']
-existing_patterns_found: 42
+date: '2026-05-29'
+status: 'ALL 10 EPICS COMPLETE — 63/63 stories'
+sections_completed: ['technology_stack', 'language_rules', 'framework_rules', 'testing_rules', 'code_quality', 'workflow_rules', 'critical_rules', 'epic_2_rules', 'epic_3_rules', 'epic_4_rules', 'epic_5_rules', 'epic_6_rules', 'epic_7_rules', 'epic_8_rules', 'epic_9_rules', 'epic_10_rules']
+existing_patterns_found: 57
 ---
 
 # Project Context for AI Agents
 
-_Critical rules and patterns for STravel. Compiled from bugs found and patches applied across all 6 epics._
+_Critical rules and patterns for STravel. Compiled from bugs found and patches applied across all 10 epics._
 
 ---
 
@@ -159,8 +159,31 @@ model_config = {"env_file": ".env", "case_sensitive": False, "extra": "ignore"}
 - **`useReducer` for streaming state** — NOT `useState`
 - `components/shared/` for cross-surface primitives (reused by B2B and B2C)
 - All interactive components need `data-testid` for Playwright
-- Use `apiClient.ts` — NEVER raw `fetch()`
+- Use `apiClient.ts` — NEVER raw `fetch()` (ESLint `no-restricted-globals` rule enforces this)
 - `URL.revokeObjectURL()` after blob download to prevent memory leak
+
+### Frontend — Phase 2: Chat-First UI (Epics 7–10)
+
+- **Dual-sentinel `aria-live` pattern**: Two always-in-DOM sentinels — one `role="status" aria-live="polite"` and one `role="alert" aria-live="assertive"`. Never dynamically change `aria-live` on the same element (AT reads the value at mount time). See `stravel/docs/aria-patterns.md`.
+- **`aria-disabled` vs `disabled` in focus traps**: Use `aria-disabled={true}` + onClick guard for buttons inside modal focus traps. `disabled` removes the element from the tab order, breaking Tab cycling. See `aria-patterns.md` §3.
+- **Focus trap pattern**: `onKeyDown` Tab/Shift+Tab on the modal container div; compare `document.activeElement` to first/last focusable refs to cycle.
+- **triggerRef focus restoration**: Store `useRef` to the button that opened a modal; restore focus synchronously in cancel handler (`triggerRef.current?.focus()`). WCAG 2.1 SC 2.4.3. (UX-DR18: focus defaults to Cancel on open, not Confirm.)
+- **`aria-describedby` on dialogs**: Always link the description paragraph to `role="dialog"` via `aria-describedby` + `id` pair. Without it, AT may not read the description automatically.
+- **Status transition announcements**: Use `useRef` (not `useState`) to track previous prop value for detecting specific transitions (e.g., `confirmed → modified`) — avoids re-render on prev-value change.
+- **ESLint flat config (`eslint.config.mjs`)**: ESLint 9 format. `@typescript-eslint/flat/recommended` rules loaded via IIFE (handles both array and object config shapes). `react-hooks` v7: use only `rules-of-hooks: error` + `exhaustive-deps: warn` (not `recommended-latest` which includes experimental React Compiler rules).
+- **`@tanstack/react-virtual` v3.13.26**: Virtualizer requires mock in jsdom tests:
+  ```ts
+  vi.mock('@tanstack/react-virtual', () => ({
+    useVirtualizer: (opts: { count: number }) => ({
+      getVirtualItems: () => Array.from({ length: opts.count }, (_, i) => ({ index: i, start: i * 50, size: 50, key: i, lane: 0 })),
+      getTotalSize: () => opts.count * 50,
+    }),
+  }));
+  ```
+- **`.js` counterpart sync**: Every `.tsx` component has a generated `.js` counterpart. After editing a `.tsx` file, the `.js` file must also be updated (or deleted if unused — confirm with `git status`).
+- **`--tw-ring-color` CSS variable**: Tailwind v3 injects `--tw-ring-color` via utilities. If you use ring-color in CSS without Tailwind's JIT, define it manually: `--tw-ring-color: var(--color-primary);`.
+- **Async modal cancel guard**: Check `confirming` flag at the top of all cancel/close handlers — if an async operation is in-flight, return early. Also applies to backdrop click and Escape key handlers.
+- **Error state in modals**: Never use empty `catch {}` in async confirm handlers. Show `role="alert"` error inside the modal; clear it with `setError(null)` when the modal reopens. Modal stays open on error (user can retry).
 
 ### Testing Rules
 
@@ -198,7 +221,10 @@ stravel/
 │   └── prompts/        # base, personas
 ├── frontend/src/
 │   ├── components/{shared,b2b,b2c}/
+│   ├── components/cards/         # SlotCard, MultiSelectCard, PassportUploadCard, etc.
 │   ├── hooks/, reducers/, services/, types/
+├── docs/
+│   └── aria-patterns.md          # Canonical ARIA accessibility patterns (Epics 7–10)
 ├── infra/k8s/          # namespace, configmap, secret, ingress, kustomization + per-service dirs
 ├── e2e/                # Playwright tests (3 suites)
 ├── data/seed/          # Vietnam entities, visa rules, seasons
@@ -232,17 +258,27 @@ if any(h in activity for h in HIGH_RISK)  # Use re.search with \b instead
 # ❌ Semantic similarity for entity validation (partial matches pass)
 # Use exact/prefix name match instead
 
-# ❌ Raw fetch() in React — use apiClient.ts
+# ❌ Raw fetch() in React — use apiClient.ts (ESLint enforces this)
+
+# ❌ disabled={true} on a button inside a modal focus trap — use aria-disabled + onClick guard
+# ❌ Dynamically change aria-live attribute — use dual-sentinel pattern (aria-patterns.md §1)
+# ❌ Empty catch {} in async modal confirm — show role="alert" error in modal (aria-patterns.md §8)
+# ❌ Landmark roles (banner/main/navigation) on sub-components — use role="region" or role="alert"
 ```
 
 ### All Phases Complete
 
-| Phase | Services | Status |
-|---|---|---|
-| Phase 1 | FastAPI + PostgreSQL + Ollama | **COMPLETE (Epic 1)** |
-| Phase 2 | + Qdrant + Redis | **COMPLETE (Epic 2)** |
-| Phase 3 | + vLLM (replaces Ollama) | **COMPLETE (Epic 3)** |
-| Phase 4 | + Kubernetes | **COMPLETE (Epic 6)** |
+| Phase | Services / Focus | Stories | Status |
+|---|---|---|---|
+| Backend Phase 1 | FastAPI + PostgreSQL + Ollama | Epic 1 | **COMPLETE** |
+| Backend Phase 2 | + Qdrant + Redis (RAG) | Epic 2 | **COMPLETE** |
+| Backend Phase 3 | + vLLM + Calculation engine | Epic 3 | **COMPLETE** |
+| Backend Phase 4 | + Compliance engine | Epic 4 | **COMPLETE** |
+| Backend Phase 5 | + Demo mode | Epic 5 | **COMPLETE** |
+| Backend Phase 6 | + Kubernetes / infra | Epic 6 | **COMPLETE** |
+| **UI Phase 2** | **Chat-first UI (B2C + B2B)** | **Epics 7–10 (32 stories)** | **COMPLETE** |
+
+**Grand total: 63/63 stories done. 778 frontend tests passing. 0 rework stories.**
 
 ### Alembic Migration Notes
 
@@ -259,8 +295,9 @@ _bmad-output/
 ├── brainstorming/
 ├── planning-artifacts/                   # architecture.md, epics.md, PRD, briefs
 └── implementation-artifacts/
-    ├── sprint-status.yaml                # 31/31 done
+    ├── sprint-status.yaml                # 63/63 done
     ├── index.md                          # Epic status overview
     ├── deferred-work.md
-    ├── epic-1/ through epic-6/           # ALL COMPLETE
+    ├── epic-1/ through epic-10/          # ALL COMPLETE
+    └── epic-phase2-retro-2026-05-29.md  # Phase 2 retrospective (Epics 7–10)
 ```

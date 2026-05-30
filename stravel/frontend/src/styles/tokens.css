@@ -1,0 +1,68 @@
+/* Design tokens — the ONLY place hex values are permitted.
+   All components must reference CSS variables, never hardcoded hex. */
+
+:root {
+  /* B2C defaults (teal-600 palette) */
+  --color-primary: #0D9488;
+  --color-primary-hover: #0F766E;
+  --color-accent: #F59E0B;
+  --color-accent-hover: #D97706;
+
+  /* Shared semantic */
+  --color-surface: #FFFFFF;
+  --color-surface-2: #F8FAFC;
+  --color-border: #E2E8F0;
+  --color-text: #0F172A;
+  --color-text-muted: #64748B;
+
+  /* B2B session status (used in Epic 10 / Story 8.1) */
+  --status-pending: #F59E0B;
+  --status-confirmed: #10B981;
+  --status-modified: #3B82F6;
+  --status-flagged: #EF4444;
+  /* Legacy backend enum values — mapped until backend updates to new vocab */
+  --status-in_progress: #3B82F6;
+  --status-completed: #10B981;
+  --status-archived: #64748B;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* B2C theme — Warm Coastal (teal-600 primary, amber accent) */
+.theme-b2c {
+  --color-primary: #0D9488;
+  --color-primary-hover: #0F766E;
+  --color-accent: #F59E0B;
+  --color-accent-hover: #D97706;
+  --color-surface: #FFFFFF;
+  --color-surface-2: #F8FAFC;
+  --color-border: #E2E8F0;
+  --color-text: #0F172A;
+  --color-text-muted: #64748B;
+  --status-pending: #F59E0B;
+  --status-confirmed: #10B981;
+  --status-modified: #3B82F6;
+  --status-flagged: #EF4444;
+}
+
+/* B2B theme — Professional Slate (blue-700 primary) */
+.theme-b2b {
+  --color-primary: #1D4ED8;
+  --color-primary-hover: #1E40AF;
+  --color-accent: #64748B;
+  --color-accent-hover: #475569;
+  --color-surface: #FFFFFF;
+  --color-surface-2: #F8FAFC;
+  --color-border: #CBD5E1;
+  --color-text: #0F172A;
+  --color-text-muted: #64748B;
+  --status-pending: #F59E0B;
+  --status-confirmed: #10B981;
+  --status-modified: #3B82F6;
+  --status-flagged: #EF4444;
+  /* Legacy backend enum values — mapped until backend updates to new vocab */
+  --status-in_progress: #3B82F6;
+  --status-completed: #10B981;
+  --status-archived: #64748B;
+}

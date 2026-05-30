@@ -1,0 +1,6 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+export function ProposalInline({ proposal }) {
+    if (!proposal)
+        return null;
+    return (_jsxs("div", { "data-testid": "proposal-inline", style: { border: "1px solid #e5e7eb", borderRadius: "8px", padding: "16px", margin: "16px 0" }, children: [_jsx("h2", { children: "Your Trip Proposal" }), proposal.itinerary && (_jsxs("details", { open: true, children: [_jsx("summary", { "data-testid": "proposal-itinerary-toggle", children: "Itinerary" }), _jsx("pre", { style: { whiteSpace: "pre-wrap", fontSize: "14px" }, children: proposal.itinerary })] })), proposal.budget_breakdown && proposal.budget_breakdown.length > 0 && (_jsxs("details", { children: [_jsx("summary", { "data-testid": "proposal-budget-toggle", children: "Budget Breakdown" }), _jsxs("table", { style: { width: "100%", marginTop: "8px" }, children: [_jsx("thead", { children: _jsxs("tr", { children: [_jsx("th", { children: "Category" }), _jsx("th", { children: "Amount" })] }) }), _jsx("tbody", { children: proposal.budget_breakdown.map((item, i) => (_jsxs("tr", { children: [_jsx("td", { children: item.category }), _jsxs("td", { children: ["$", item.allocated.toFixed(2)] })] }, i))) })] })] }))] }));
+}

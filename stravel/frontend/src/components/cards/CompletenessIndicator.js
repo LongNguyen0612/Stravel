@@ -1,0 +1,6 @@
+import { jsx as _jsx } from "react/jsx-runtime";
+export function CompletenessIndicator({ score, state, className }) {
+    const pct = Math.round(score * 100);
+    const fillClass = state === 'settled' ? 'bg-status-confirmed' : 'bg-status-pending';
+    return (_jsx("div", { role: "progressbar", "aria-valuenow": pct, "aria-valuemin": 0, "aria-valuemax": 100, "aria-label": `${pct}% complete`, className: `h-1 w-full overflow-hidden rounded-full bg-surface-2 ${className ?? ''}`, children: _jsx("div", { className: `h-full ${fillClass} transition-[width] duration-300`, style: { width: `${pct}%` } }) }));
+}

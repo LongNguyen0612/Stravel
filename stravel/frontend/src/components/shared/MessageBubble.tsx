@@ -2,14 +2,14 @@ import type { ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
-  sender: "agent" | "user";
+  role: "bot" | "user" | "stage-narrator";
 }
 
-export function MessageBubble({ children, sender }: Props) {
+export function MessageBubble({ children, role }: Props) {
   return (
     <div
       data-testid="message-bubble"
-      className={`message-bubble message-bubble--${sender}`}
+      className={`message-bubble message-bubble--${role}`}
     >
       {children}
     </div>

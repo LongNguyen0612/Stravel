@@ -1,13 +1,57 @@
 # STravel Sprint Status
-# Updated: 2026-05-25
-# Total: 31 stories across 6 epics — ALL COMPLETE
+# Generated: 2026-05-26
+# last_updated: 2026-05-26
+# project: AIFU / STravel
+# tracking_system: file-system
+# story_location: _bmad-output/implementation-artifacts
 
 # STATUS DEFINITIONS:
-# done — implemented, reviewed, tests passing
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# Epics 1–6 (epics.md): Original STravel platform — ALL COMPLETE (31/31 stories done)
+# Epics 7–10 (epics-v2.md): Chat-First UI layer — NEW SPRINT (32 stories)
+#   Epic 7  = Chat-First UI Epic 1: Unified Canvas & Live Conversation (7 stories)
+#   Epic 8  = Chat-First UI Epic 2: Card-Driven Profile Collection (10 stories)
+#   Epic 9  = Chat-First UI Epic 3: Propose-First & Interactive Proposal Deck (10 stories)
+#   Epic 10 = Chat-First UI Epic 4: B2B Agent Mode (5 stories)
+# Story files live under implementation-artifacts/epic-{N}/
+# - create-story → sets story to ready-for-dev
+# - dev-story    → sets story to in-progress → review
+# - code-review  → sets story to done
 
-last_updated: "2026-05-25"
+generated: "2026-05-26"
+last_updated: "2026-05-29"  # Phase 2 complete; all retrospectives done; 63/63 stories; 778 tests
+project: AIFU
+tracking_system: file-system
+story_location: _bmad-output/implementation-artifacts
 
 development_status:
+
+  # ─────────────────────────────────────────────────────────────────
+  # PHASE 1: Original STravel Platform (epics.md) — ALL COMPLETE
+  # ─────────────────────────────────────────────────────────────────
+
   epic-1: done  # Foundation & Traveler Profiling
   1-1-project-setup: done
   1-2-database-models: done
@@ -17,6 +61,7 @@ development_status:
   1-6-auth-tenant: done
   1-7-sse-streaming: done
   1-8-react-copilot: done
+  epic-1-retrospective: done
 
   epic-2: done  # Travel Data Intelligence
   2-1-qdrant-vector-store: done
@@ -26,6 +71,7 @@ development_status:
   2-5-regulatory-data: done
   2-6-seed-data: done
   2-7-vllm-serving: done
+  epic-2-retrospective: done
 
   epic-3: done  # Trip Planning & Proposal Generation
   3-1-budget-allocation: done
@@ -35,42 +81,101 @@ development_status:
   3-5-itinerary-generation: done
   3-6-comparison-budget-actions: done
   3-7-proposal-export: done
+  epic-3-retrospective: done
 
   epic-4: done  # Compliance & Safety Validation
   4-1-visa-document-checks: done
   4-2-health-advisory-age: done
   4-3-seasonal-budget-accessibility: done
   4-4-compliance-gate: done
+  epic-4-retrospective: done
 
   epic-5: done  # Consumer Demo & Client History
   5-1-b2c-demo-chat: done
   5-2-client-history: done
+  epic-5-retrospective: done
 
-  epic-6: done  # Production & Quality Assurance
+  epic-6: done  # Production Deployment & Quality Assurance
   6-1-kubernetes-deployment: done
   6-2-full-observability: done
   6-3-playwright-e2e: done
+  epic-6-retrospective: done
+
+  # ─────────────────────────────────────────────────────────────────
+  # PHASE 2: Chat-First UI (epics-v2.md) — NEW SPRINT
+  # ─────────────────────────────────────────────────────────────────
+
+  epic-7: done  # Unified Canvas & Live Conversation (Chat-First UI Epic 1)
+  7-1-design-tokens-layout-shell: done
+  7-2-conversationcanvas-fixed-layout: done
+  7-3-travelcard-state-machine: done
+  7-4-sse-heartbeat-is-final: done
+  7-5-bot-greeting-messagebubble: done
+  7-6-stagenarrator-progress-bar: done
+  7-7-aria-live-state-machine: done
+  epic-7-retrospective: done
+
+  epic-8: done  # Card-Driven Profile Collection (Chat-First UI Epic 2)
+  8-1-mood-transition-user-prefs-session-status: done
+  8-2-slotfillingcard-base: done
+  8-3-mood-first-entry: done
+  8-4-destination-cards: done
+  8-5-inline-calendar-card: done
+  8-6-budget-slider-card: done
+  8-7-multi-select-cards: done
+  8-8-passport-ocr-backend: done
+  8-9-passport-upload-card: done
+  8-10-zero-typing-verification: done
+  epic-8-retrospective: done  # covered in Phase 2 combined retro (2026-05-29)
+
+  epic-9: done  # Propose-First & Interactive Proposal Deck (Chat-First UI Epic 3)
+  9-1-decouple-sse-generation: done
+  9-2-redis-event-buffer: done
+  9-3-durable-session-state: done
+  9-4-propose-first-flow: done
+  9-5-proposal-card-types: done
+  9-6-carddeck-state-machine: done
+  9-7-auto-trigger-analysis: done
+  9-8-progressive-proposal-streaming: done
+  9-9-inline-card-editing: done
+  9-10-compliance-inline-badges: done
+  epic-9-retrospective: done  # covered in Phase 2 combined retro (2026-05-29)
+
+  epic-10: done  # B2B Agent Mode (Chat-First UI Epic 4)
+  10-1-b2b-session-state-machine-api: done
+  10-2-b2blayout-shell: done
+  10-3-sessionstatusbadge: done
+  10-4-sessionlist-sessionrow: done
+  10-5-staginggate: done
+  epic-10-retrospective: done  # covered in Phase 2 combined retro (2026-05-29)
 
 metrics:
-  total_stories: 31
-  done: 31
-  completion_pct: 100
+  # NOTE: The metrics section is a MANUAL end-of-phase artifact.
+  # It is NOT auto-updated per story. Update at end of each epic or phase.
+  # Story counts are authoritative from development_status above.
+  # Phase 1 — Original Platform
+  phase1_stories: 31
+  phase1_done: 31
+  phase1_completion_pct: 100
 
-  tests:
+  # Phase 2 — Chat-First UI (new sprint)
+  phase2_stories: 32
+  phase2_done: 32
+  phase2_completion_pct: 100
+
+  # Combined
+  total_epics: 10
+  total_stories: 63
+  total_done: 63
+
+  phase1_tests:
     unit: 190
     integration_scripts: 4
     integration_checks: 89
     e2e_suites: 3
     total_passing: 190
 
-  epics_complete: 6
-  epics_remaining: 0
-
-  code_reviews:
-    total: 3
-    patches_applied: 18
-
-  code_stats:
+  phase1_code_stats:
     backend_python_files: 135
     frontend_typescript_files: 19
     k8s_manifests: 12

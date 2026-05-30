@@ -15,6 +15,11 @@ class SessionUpdateRequest(BaseModel):
     status: SessionStatus
 
 
+class SessionStatusUpdateRequest(BaseModel):
+    status: SessionStatus
+    flag_reason: str | None = None
+
+
 class SessionResponse(BaseModel):
     id: uuid.UUID
     tenant_id: str

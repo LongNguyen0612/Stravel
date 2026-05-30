@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STravel — Design Direction Mockups</title>
+<style>
+  :root {
+    --teal-600: #0D9488;
+    --teal-700: #0F766E;
+    --teal-100: #CCFBF1;
+    --teal-50:  #F0FDFA;
+    --jade-600: #1B6B5A;
+    --jade-700: #155247;
+    --jade-100: #C8EDE5;
+    --amber-500: #F59E0B;
+    --amber-200: #FCD34D;
+    --amber-50:  #FFFBEB;
+    --slate-700: #334155;
+    --slate-500: #64748B;
+    --slate-200: #E2E8F0;
+    --slate-100: #F1F5F9;
+    --blue-800:  #1E40AF;
+    --blue-600:  #2563EB;
+    --warm-white: #FAFAF9;
+    --cool-white: #F8FAFC;
+    --text-primary: #111827;
+    --text-secondary: #6B7280;
+    --green-600: #059669;
+    --green-50:  #F0FDF4;
+    --red-600:   #DC2626;
+    --red-50:    #FEF2F2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    background: #0F172A;
+    color: #F8FAFC;
+    min-height: 100vh;
+  }
+
+  /* ── Nav ─────────────────────────────────────── */
+  .nav {
+    background: #1E293B;
+    border-bottom: 1px solid #334155;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    flex-wrap: wrap;
+  }
+  .nav-title { font-size: 14px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.08em; margin-right: 8px; }
+  .tab {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid #334155;
+    background: transparent;
+    color: #94A3B8;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .tab:hover { background: #334155; color: #F1F5F9; }
+  .tab.active { background: var(--teal-600); border-color: var(--teal-600); color: white; }
+
+  /* ── Sections ─────────────────────────────────── */
+  .section { display: none; padding: 32px 24px; max-width: 1400px; margin: 0 auto; }
+  .section.active { display: block; }
+  .section-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  .section-sub { font-size: 14px; color: #94A3B8; margin-bottom: 32px; }
+  .direction-label {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .label-b2c { background: rgba(13,148,136,0.2); color: var(--teal-600); }
+  .label-b2b { background: rgba(30,64,175,0.2); color: #60A5FA; }
+  .label-challenger { background: rgba(27,107,90,0.15); color: #4ADE80; }
+  .label-states { background: rgba(245,158,11,0.2); color: var(--amber-500); }
+
+  .mockup-grid { display: grid; gap: 32px; }
+  .mockup-grid-2 { grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); }
+  .mockup-grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+  .mockup-card {
+    background: #1E293B;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .mockup-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid #334155;
+    font-size: 12px;
+    font-weight: 600;
+    color: #94A3B8;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .mockup-body { padding: 0; }
+
+  /* ── Phone frame ──────────────────────────────── */
+  .phone-frame {
+    width: 375px;
+    margin: 0 auto;
+    background: var(--warm-white);
+    min-height: 640px;
+    border-radius: 0;
+    overflow: hidden;
+    color: var(--text-primary);
+  }
+  .phone-frame.jade { --teal-600: #1B6B5A; --teal-700: #155247; --teal-100: #C8EDE5; --teal-50: #ECFDF7; }
+
+  /* ── Chat status bar ──────────────────────────── */
+  .status-bar {
+    background: var(--teal-600);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .status-bar.jade { background: var(--jade-600); }
+  .status-title { color: white; font-size: 16px; font-weight: 700; }
+  .status-subtitle { color: rgba(255,255,255,0.75); font-size: 11px; }
+  .status-dots { display: flex; gap: 3px; }
+  .status-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.6); }
+  .status-dot.active { background: #4ADE80; }
+
+  /* ── Chat thread ──────────────────────────────── */
+  .chat-thread {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--warm-white);
+  }
+  .bubble-row { display: flex; align-items: flex-end; gap: 8px; }
+  .bubble-row.user { justify-content: flex-end; }
+  .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--teal-600); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; flex-shrink: 0; }
+  .bubble {
+    max-width: 240px;
+    padding: 10px 14px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .bubble.bot { background: white; color: var(--text-primary); border-bottom-left-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+  .bubble.user { background: var(--teal-600); color: white; border-bottom-right-radius: 4px; }
+  .bubble.user.jade { background: var(--jade-600); }
+
+  /* ── Stage narrator ───────────────────────────── */
+  .stage-narrator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 0;
+    font-size: 11px;
+    font-style: italic;
+    color: var(--text-secondary);
+  }
+  .narrator-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber-500); animation: pulse 1.4s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  /* ── Suggestion chips ─────────────────────────── */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 0; }
+  .chip {
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1.5px solid var(--teal-600);
+    color: var(--teal-600);
+    background: white;
+    cursor: pointer;
+  }
+  .chip.jade { border-color: var(--jade-600); color: var(--jade-600); }
+  .chip.filled { background: var(--teal-600); color: white; border-color: var(--teal-600); }
+
+  /* ── Proposal cards ───────────────────────────── */
+  .proposal-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+    border: 1px solid var(--slate-200);
+    margin-bottom: 12px;
+  }
+  .card-header {
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--slate-100);
+  }
+  .card-type {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+  }
+  .card-edit-btn {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--teal-50);
+    color: var(--teal-600);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
+    border: none;
+  }
+  .card-body { padding: 12px 14px; }
+  .card-title { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
+  .card-subtitle { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
+  .card-meta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .card-meta-item { font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 3px; }
+  .card-price { font-size: 18px; font-weight: 700; color: var(--teal-600); }
+  .card-cta {
+    margin: 8px 14px 12px;
+    padding: 10px;
+    background: var(--teal-600);
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .card-cta.jade { background: var(--jade-600); }
+
+  /* Nascent card */
+  .card-nascent {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--slate-200);
+    margin-bottom: 12px;
+  }
+  .shimmer-line {
+    height: 14px;
+    border-radius: 7px;
+    background: linear-gradient(90deg, #FCD34D22 0%, #F59E0B44 40%, #FCD34D22 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.6s infinite;
+    margin: 6px 0;
+  }
+  .shimmer-line.short { width: 60%; }
+  .shimmer-line.medium { width: 80%; }
+  .shimmer-line.full { width: 100%; }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+  .shimmer-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #FCD34D22 0%, #F59E0B44 40%, #FCD34D22 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.6s infinite;
+  }
+
+  /* Forming card */
+  .card-forming {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1.5px solid var(--amber-200);
+    margin-bottom: 12px;
+  }
+  .forming-badge {
+    font-size: 10px;
+    color: #92400E;
+    background: var(--amber-50);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .withheld {
+    background: var(--slate-100);
+    border-radius: 4px;
+    height: 14px;
+    width: 80px;
+    display: inline-block;
+  }
+  .withheld.wide { width: 120px; }
+
+  /* Settled card */
+  .card-settled {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--slate-200);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.08);
+    margin-bottom: 12px;
+  }
+  .settled-badge {
+    font-size: 10px;
+    color: #065F46;
+    background: #ECFDF5;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  /* Compliance badge */
+  .compliance-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0 14px 12px;
+  }
+  .compliance-pass { background: var(--green-50); color: var(--green-600); }
+  .compliance-warn { background: var(--amber-50); color: #92400E; }
+  .compliance-block { background: var(--red-50); color: var(--red-600); }
+
+  /* ── Chat input ───────────────────────────────── */
+  .chat-input-bar {
+    padding: 8px 12px;
+    background: white;
+    border-top: 1px solid var(--slate-200);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .chat-input {
+    flex: 1;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--slate-200);
+    background: var(--slate-100);
+    font-size: 14px;
+    color: var(--text-secondary);
+    outline: none;
+  }
+  .send-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--teal-600);
+    border: none;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .send-btn.jade { background: var(--jade-600); }
+
+  /* ── B2B Desktop ──────────────────────────────── */
+  .desktop-frame {
+    background: var(--cool-white);
+    color: var(--text-primary);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 13px;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+  }
+  .desktop-topbar {
+    background: var(--blue-800);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .topbar-logo { color: white; font-size: 16px; font-weight: 800; letter-spacing: -0.02em; }
+  .topbar-meta { color: rgba(255,255,255,0.6); font-size: 12px; }
+  .topbar-avatar { width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; }
+
+  .desktop-body { display: flex; flex: 1; }
+
+  .session-panel {
+    width: 280px;
+    border-right: 1px solid var(--slate-200);
+    background: white;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+  .session-panel-header {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--slate-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .session-panel-title { font-size: 13px; font-weight: 700; color: var(--slate-700); }
+  .new-session-btn {
+    padding: 4px 10px;
+    background: var(--blue-800);
+    color: white;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+  }
+  .session-list { overflow-y: auto; }
+  .session-row {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--slate-100);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .session-row:hover { background: var(--slate-100); }
+  .session-row.active { background: #EFF6FF; border-left: 3px solid var(--blue-600); padding-left: 13px; }
+  .session-row-top { display: flex; align-items: center; justify-content: space-between; }
+  .session-name { font-size: 13px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
+  .session-date { font-size: 10px; color: var(--text-secondary); }
+  .session-dest { font-size: 11px; color: var(--text-secondary); }
+
+  /* Status badges */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .status-pending   { background: #EFF6FF; color: var(--blue-600); }
+  .status-confirmed { background: var(--green-50); color: var(--green-600); }
+  .status-modified  { background: var(--amber-50); color: #D97706; }
+  .status-flagged   { background: var(--red-50); color: var(--red-600); }
+
+  .workspace {
+    flex: 1;
+    padding: 20px;
+    background: var(--cool-white);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .workspace-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--slate-200);
+  }
+  .client-name { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+  .client-meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+  .workspace-actions { display: flex; gap: 8px; }
+  .action-btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--slate-200);
+    background: white;
+    color: var(--slate-700);
+  }
+  .action-btn.primary {
+    background: var(--blue-800);
+    color: white;
+    border-color: var(--blue-800);
+  }
+
+  .b2b-card {
+    background: white;
+    border: 1px solid var(--slate-200);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .b2b-card-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary); margin-bottom: 8px; }
+  .b2b-itinerary-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--slate-100);
+  }
+  .b2b-day-num { font-size: 20px; font-weight: 800; color: var(--blue-800); min-width: 28px; }
+  .b2b-day-content { flex: 1; }
+  .b2b-day-title { font-size: 13px; font-weight: 600; }
+  .b2b-day-sub { font-size: 11px; color: var(--text-secondary); }
+  .b2b-day-price { font-size: 13px; font-weight: 700; color: var(--blue-800); white-space: nowrap; }
+
+  .staging-banner {
+    background: #FFF7ED;
+    border: 1px solid #FED7AA;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: #9A3412;
+  }
+  .staging-icon { font-size: 16px; }
+  .staging-text { flex: 1; }
+  .staging-btn {
+    padding: 5px 12px;
+    background: #EA580C;
+    color: white;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  /* ── Color comparison ─────────────────────────── */
+  .color-swatch-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .swatch {
+    border-radius: 10px;
+    overflow: hidden;
+    flex: 1;
+    min-width: 140px;
+    max-width: 200px;
+  }
+  .swatch-color { height: 72px; }
+  .swatch-body { padding: 10px 12px; background: #1E293B; }
+  .swatch-name { font-size: 13px; font-weight: 700; }
+  .swatch-hex { font-size: 11px; color: #94A3B8; font-family: monospace; }
+  .swatch-note { font-size: 11px; color: #94A3B8; margin-top: 4px; }
+
+  /* ── Mood cards ───────────────────────────────── */
+  .mood-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 8px 0; }
+  .mood-card {
+    padding: 10px;
+    border-radius: 12px;
+    border: 1.5px solid var(--slate-200);
+    background: white;
+    text-align: center;
+    cursor: pointer;
+  }
+  .mood-card:hover { border-color: var(--teal-600); }
+  .mood-emoji { font-size: 22px; margin-bottom: 4px; }
+  .mood-label { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+
+  /* ── Availability badge ───────────────────────── */
+  .avail-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .avail-high { background: var(--green-50); color: var(--green-600); }
+  .avail-low  { background: var(--amber-50); color: #D97706; }
+  .avail-none { background: var(--amber-50); color: #92400E; }
+
+  .avail-amber-bar {
+    background: #FFFBEB;
+    border-top: 1px solid #FCD34D;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #92400E;
+  }
+  .avail-amber-bar strong { font-weight: 700; }
+
+  hr.divider { border: none; border-top: 1px solid #334155; margin: 24px 0; }
+
+  /* ── Section hero ─────────────────────────────── */
+  .hero-note {
+    background: #1E293B;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: #94A3B8;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .hero-note strong { color: #F1F5F9; }
+</style>
+</head>
+<body>
+
+<!-- ── Navigation ─────────────────────────────────────────────── -->
+<nav class="nav">
+  <span class="nav-title">STravel</span>
+  <button class="tab active" onclick="show('d1')">1 · B2C Chat (Teal)</button>
+  <button class="tab" onclick="show('d2')">2 · B2C Chat (Jade)</button>
+  <button class="tab" onclick="show('d3')">3 · Card States</button>
+  <button class="tab" onclick="show('d4')">4 · Proposal Deck</button>
+  <button class="tab" onclick="show('d5')">5 · B2B Copilot</button>
+  <button class="tab" onclick="show('d6')">6 · Colors</button>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════
+     DIRECTION 1 — B2C Chat, Teal Primary
+═══════════════════════════════════════════════════════════════ -->
+<section class="section active" id="d1">
+  <div class="direction-label label-b2c">Direction 1 · B2C Mobile · Teal Primary</div>
+  <div class="section-title">Warm Coastal — Propose-First Flow</div>
+  <div class="section-sub">Mobile chat, bot speaks first, Propose-First path. Primary: #0D9488 teal. Amber as dominant accent.</div>
+
+  <div class="hero-note">
+    <strong>What you're evaluating:</strong> Does teal-600 achieve the "texting a knowledgeable friend" emotional register?
+    Does amber feel like a meaningful punctuation or a distraction? Compare with Direction 2 (jade) to decide.
+  </div>
+
+  <div class="mockup-grid mockup-grid-2">
+
+    <!-- Opening message -->
+    <div class="mockup-card">
+      <div class="mockup-header">
+        <span class="dot" style="background:#4ADE80"></span>
+        Opening — Bot speaks first
+      </div>
+      <div class="mockup-body">
+        <div class="phone-frame">
+          <div class="status-bar">
+            <div>
+              <div class="status-title">STravel</div>
+              <div class="status-subtitle">AI Travel Advisor</div>
+            </div>
+            <div class="status-dots">
+              <div class="status-dot active"></div>
+              <div class="status-dot"></div>
+              <div class="status-dot"></div>
+            </div>
+          </div>
+          <div class="chat-thread">
+            <div class="bubble-row">
+              <div class="avatar">S</div>
+              <div class="bubble bot">
+                Where are you thinking of going — or what kind of trip are you in the mood for? ✈️
+              </div>
+            </div>
+            <div class="chips">
+              <div class="chip">🏖️ Beach & relax</div>
+              <div class="chip">🏙️ City culture</div>
+              <div class="chip">🌿 Off the grid</div>
+              <div class="chip">🍜 Food & markets</div>
+            </div>
+            <div class="bubble-row">
+              <div class="avatar">S</div>
+              <div class="bubble bot">
+                Or tell me anything — a feeling, a city name, something a friend mentioned.
+              </div>
+            </div>
+          </div>
+          <div class="chat-input-bar">
+            <input class="chat-input" placeholder="Type or just tap a card above…" readonly>
+            <button class="send-btn">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Propose-First generating -->
+    <div class="mockup-card">
+      <div class="mockup-header">
+        <span class="dot" style="background:var(--amber-500)"></span>
+        Generating — Stage Narrator
+      </div>
+      <div class="mockup-body">
+        <div class="phone-frame">
+          <div class="status-bar">
+            <div>
+              <div class="status-title">STravel</div>
+              <div class="status-subtitle">Building your trip…</div>
+            </div>
+          </div>
+          <div class="chat-thread">
+            <div class="bubble-row">
+              <div class="avatar">S</div>
+              <div class="bubble bot">Where are you thinking of going?</div>
+            </div>
+            <div class="bubble-row user">
+              <div class="bubble user">Vietnam, 10 days, something relaxed with good food</div>
+            </div>
+            <div class="bubble-row">
+              <div class="avatar">S</div>
+              <div class="bubble bot">
+                Perfect — putting together a draft for you now.
+              </div>
+            </div>
+            <div class="stage-narrator">
+              <div class="narrator-dot"></div>
+              Mapping your 10 days across the country…
+            </div>
+            <div class="card-nascent">
+              <div class="card-header">
+                <div class="card-type">✈️ Flights</div>
+                <span style="font-size:10px;color:#94A3B8">Gathering…</span>
+              </div>
+              <div class="card-body">
+                <div class="shimmer-line medium"></div>
+                <div class="shimmer-line short"></div>
+                <div style="display:flex;gap:8px;margin-top:8px">
+                  <div class="shimmer-icon"></div>
+                  <div style="flex:1">
+                    <div class="shimmer-line full"></div>
+                    <div class="shimmer-line short"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="stage-narrator">
+              <div class="narrator-dot"></div>
+              Selecting hotels in Hội An…
+            </div>
+          </div>
+          <div class="chat-input-bar">
+            <input class="chat-input" placeholder="Generating your proposal…" readonly>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /grid -->
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     DIRECTION 2 — B2C Chat, Jade Primary (Challenger)
+═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="d2">
+  <div class="direction-label label-challenger">Direction 2 · B2C Mobile · Vietnamese Jade Challenger</div>
+  <div class="section-title">Jade Green — Vietnam-Specific Primary</div>
+  <div class="section-sub">Same layout as Direction 1. Primary swapped to Vietnamese jade #1B6B5A. Mary's challenge: does this feel more "cultural insider" than teal?</div>
+
+  <div class="hero-note">
+    <strong>What you're evaluating:</strong> Compare this side-by-side with Direction 1.
+    Jade green (#1B6B5A) draws from Vietnamese temple jade, lacquerware, and the color language of Hanoi's Old Quarter.
+    Does it feel more Vietnam-specific, or does the difference feel subtle in practice?
+  </div>
+
+  <div class="mockup-grid mockup-grid-2">
+
+    <div class="mockup-card">
+      <div class="mockup-header">
+        <span class="dot" style="background:#4ADE80"></span>
+        Opening — Jade primary
+      </div>
+      <div class="mockup-body">
+        <div class="phone-frame jade">
+          <div class="status-bar jade">
+            <div>
+              <div class="status-title">STravel</div>
+              <div class="status-subtitle">AI Travel Advisor</div>
+            </div>
+            <div class="status-dots">
+              <div class="status-dot active"></div>
+              <div class="status-dot"></div>
+            </div>
+          </div>
+          <div class="chat-thread">
+            <div class="bubble-row">
+              <div class="avatar" style="background:var(--jade-600)">S</div>
+              <div class="bubble bot">Where are you thinking of going — or what kind of trip are you in the mood for? ✈️</div>
+            </div>
+            <div class="chips">
+              <div class="chip jade">🏖️ Beach & relax</div>
+              <div class="chip jade">🏙️ City culture</div>
+              <div class="chip jade">🌿 Off the grid</div>
+              <div class="chip jade">🍜 Food & markets</div>
+            </div>
+            <div class="bubble-row">
+              <div class="avatar" style="background:var(--jade-600)">S</div>
+              <div class="bubble bot">Or tell me anything — a feeling, a city name, something a friend mentioned.</div>
+            </div>
+          </div>
+          <div class="chat-input-bar">
+            <input class="chat-input" placeholder="Type or just tap a card above…" readonly>
+            <button class="send-btn jade">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mockup-card">
+      <div class="mockup-header">
+        <span class="dot" style="background:#4ADE80"></span>
+        Mood selection — Jade primary
+      </div>
+      <div class="mockup-body">
+        <div class="phone-frame jade">
+          <div class="status-bar jade">
+            <div>
+              <div class="status-title">STravel</div>
+              <div class="status-subtitle">AI Travel Advisor</div>
+            </div>
+          </div>
+          <div class="chat-thread">
+            <div class="bubble-row">
+              <div class="avatar" style="background:var(--jade-600)">S</div>
+              <div class="bubble bot">How do you want to <em>feel</em> on this trip?</div>
+            </div>
+            <div class="mood-cards">
+              <div class="mood-card">
+                <div class="mood-emoji">🌊</div>
+                <div class="mood-label">Adventurous</div>
+              </div>
+              <div class="mood-card" style="border-color:var(--jade-600);background:#F0FDF9">
+                <div class="mood-emoji">☀️</div>
+                <div class="mood-label" style="color:var(--jade-600)">Relaxed ✓</div>
+              </div>
+              <div class="mood-card">
+                <div class="mood-emoji">🏛️</div>
+                <div class="mood-label">Cultural</div>
+              </div>
+              <div class="mood-card">
+                <div class="mood-emoji">💫</div>
+                <div class="mood-label">Surprise me</div>
+              </div>
+            </div>
+            <div class="bubble-row user">
+              <div class="bubble user jade">Relaxed ☀️</div>
+            </div>
+            <div class="bubble-row">
+              <div class="avatar" style="background:var(--jade-600)">S</div>
+              <div class="bubble bot">Good choice. Building a relaxed 10-day Vietnam trip now…</div>
+            </div>
+            <div class="stage-narrator">
+              <div class="narrator-dot"></div>
+              Curating slow-paced experiences in central Vietnam…
+            </div>
+          </div>
+          <div class="chat-input-bar">
+            <input class="chat-input" placeholder="Generating…" readonly>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     DIRECTION 3 — Card States
+═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="d3">
+  <div class="direction-label label-states">Direction 3 · Card States · Nascent → Forming → Settled</div>
+  <div class="section-title">Card State Progression</div>
+  <div class="section-sub">The three states each card passes through during SSE streaming. The forming → settled transition is the product's defining animation (420ms spring).</div>
+
+  <div class="hero-note">
+    <strong>What you're evaluating:</strong> The amber-tinted shimmer in nascent state.
+    The amber border → slate border transition at settling. Whether "only that card changes" is visually
+    clear when one card updates while others are already settled.
+  </div>
+
+  <div class="mockup-grid mockup-grid-3">
+
+    <!-- Nascent -->
+    <div class="mockup-card">
+      <div class="mockup-header">
+        <span class="dot" style="background:var(--amber-500)"></span>
+        Nascent (score 0–0.25)
+      </div>
+      <div class="mockup-body" style="padding:16px;background:var(--warm-white)">
+        <div style="font-size:11px;color:var(--text-secondary);margin-bottom:10px">Card container visible · amber shimmer · nothing interactive</div>
+        <div class="card-nascent">
+          <div class="card-header">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="shimmer-icon"></div>
+              <div class="card-type">Hotels</div>
+            </div>
+            <span style="font-size:10px;color:#D97706">Gathering…</span>
+          </div>
+          <div class="card-body">
+            <div class="shimmer-line medium"></div>
+            <div class="shimmer-line short"></div>
+            <div style="margin-top:10px">
+              <div class="shimmer-line full"></div>
+              <div class="shimmer-line full"></div>
+              <div class="shimmer-line short"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-nascent">
+          <div class="card-header">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="shimmer-icon"></div>
+              <div class="card-type">Day 1</div>
+            </div>
+            <span style="font-size:10px;color:#D97706">Gathering…</span>
+          </div>
+          <div class="card-body">
+            <div class="shimmer-line medium"></div>
+            <div class="shimmer-line full"></div>
+            <div class="shimmer-line short"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forming -->
+    <div class="mockup-card">
+      <div class="mockup-header">
+        <span class="dot" style="background:#FBBF24"></span>
+        Forming (score 0.25–0.75)
+      </div>
+      <div class="mockup-body" style="padding:16px;background:var(--warm-white)">
+        <div style="font-size:11px;color:var(--text-secondary);margin-bottom:10px">Structural facts visible · evaluative fields withheld · amber border</div>
+        <div class="card-forming">
+          <div class="card-header">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span>🏨</span>
+              <div class="card-type">Hotels · Hội An</div>
+            </div>
+            <span class="forming-badge">43%</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title">Old Quarter, Hội An</div>
+            <div class="card-subtitle">Boutique · 4-star range</div>
+            <div class="card-meta">
+              <div class="card-meta-item">📍 0.3km from Hội An Ancient Town</div>
+            </div>
+            <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:12px;color:var(--text-secondary)">Nightly rate</div>
+              <span class="withheld wide"></span>
+            </div>
+            <div style="margin-top:6px;display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:12px;color:var(--text-secondary)">Hotel name</div>
+              <span class="withheld"></span>
+            </div>
+          </div>
+          <div style="padding:0 14px 10px">
+            <div style="padding:8px;background:var(--slate-100);border-radius:8px;font-size:11px;color:var(--text-secondary);text-align:center;cursor:not-allowed">
+              Available once card loads
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settled -->
+    <div class="mockup-card">
+      <div class="mockup-header">
+        <span class="dot" style="background:var(--green-600)"></span>
+        Settled (score 0.75–1.0)
+      </div>
+      <div class="mockup-body" style="padding:16px;background:var(--warm-white)">
+        <div style="font-size:11px;color:var(--text-secondary);margin-bottom:10px">Full fidelity · slate border · shadow appears · all controls unlocked</div>
+        <div class="card-settled">
+          <div class="card-header">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span>🏨</span>
+              <div class="card-type">Hotels · Hội An</div>
+            </div>
+            <button class="card-edit-btn">✏️</button>
+          </div>
+          <div class="card-body">
+            <div class="card-title">Anantara Hội An Resort</div>
+            <div class="card-subtitle">Boutique · 4-star · River view</div>
+            <div class="card-meta">
+              <div class="card-meta-item">📍 0.3km Ancient Town</div>
+              <div class="card-meta-item">⭐ 4.8</div>
+            </div>
+            <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div class="card-price">$142<span style="font-size:12px;font-weight:400;color:var(--text-secondary)">/night</span></div>
+                <span class="avail-badge avail-high">● High availability</span>
+              </div>
+              <div class="card-edit-btn" style="width:auto;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:600;background:var(--teal-50);color:var(--teal-600)">3 nights</div>
+            </div>
+          </div>
+          <div class="card-cta">Ready to hold this? →</div>
+        </div>
+
+        <!-- Settled compliance -->
+        <div class="card-settled">
+          <div class="card-header">
+            <div class="card-type">🛂 Compliance</div>
+            <span class="settled-badge">All clear</span>
+          </div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <span class="compliance-badge compliance-pass">✓ Visa — e-visa available, 30 days</span>
+              <span class="compliance-badge compliance-pass">✓ Passport — 8 months remaining</span>
+              <span class="compliance-badge compliance-warn">⚠️ Budget — 4% over estimate</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+  <div style="font-size:13px;color:#94A3B8;margin-bottom:16px">
+    <strong style="color:#F1F5F9">Transition spec:</strong>
+    420ms · <code style="background:#1E293B;padding:2px 6px;border-radius:4px">cubic-bezier(0.34, 1.56, 0.64, 1)</code> spring ·
+    Box shadow + border color + opacity + scale, staggered 60ms each.
+    Border: amber-200 → slate-200 as the card "settles."
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     DIRECTION 4 — Full Proposal Deck
+═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="d4">
+  <div class="direction-label label-b2c">Direction 4 · B2C · Full Proposal Deck</div>
+  <div class="section-title">Complete Proposal — All Cards Settled</div>
+  <div class="section-sub">The full proposal deck after generation completes. One CTA per card. Booking-handoff failure state demonstrated at bottom.</div>
+
+  <div class="mockup-grid mockup-grid-2">
+
+    <div class="mockup-card">
+      <div class="mockup-header">
+        <span class="dot" style="background:var(--green-600)"></span>
+        Proposal deck — all settled
+      </div>
+      <div class="mockup-body">
+        <div class="phone-frame">
+          <div class="status-bar">
+            <div>
+              <div class="status-title">Your 10-day Vietnam trip</div>
+              <div class="status-subtitle">All cards confirmed · tap ✏️ to edit any card</div>
+            </div>
+          </div>
+          <div style="padding:12px 16px;background:var(--warm-white);overflow-y:auto">
+
+            <div class="card-settled">
+              <div class="card-header">
+                <div class="card-type">✈️ Flights</div>
+                <button class="card-edit-btn">✏️</button>
+              </div>
+              <div class="card-body">
+                <div class="card-title">SYD → HAN · 14 Jun</div>
+                <div class="card-subtitle">Vietnam Airlines · 1 stop · 14h 20m</div>
+                <div style="margin-top:8px;display:flex;justify-content:space-between">
+                  <div class="card-price">$890<span style="font-size:12px;font-weight:400;color:var(--text-secondary)"> return</span></div>
+                  <span class="avail-badge avail-high">● Available</span>
+                </div>
+              </div>
+              <div class="card-cta">Hold these flights →</div>
+            </div>
+
+            <div class="card-settled">
+              <div class="card-header">
+                <div class="card-type">🏨 Hotels (3 properties)</div>
+                <button class="card-edit-btn">✏️</button>
+              </div>
+              <div class="card-body">
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="display:flex;justify-content:space-between;font-size:13px">
+                    <span>Hanoi · Old Quarter Boutique</span>
+                    <span style="font-weight:700;color:var(--teal-600)">$88/n</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;font-size:13px">
+                    <span>Hội An · Anantara Resort</span>
+                    <span style="font-weight:700;color:var(--teal-600)">$142/n</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;font-size:13px">
+                    <span>Hồ Chí Minh City · District 1</span>
+                    <span style="font-weight:700;color:var(--teal-600)">$95/n</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-cta">Review hotels →</div>
+            </div>
+
+            <div class="card-settled">
+              <div class="card-header">
+                <div class="card-type">💰 Budget</div>
+                <button class="card-edit-btn">✏️</button>
+              </div>
+              <div class="card-body">
+                <div class="card-price">$2,840</div>
+                <div class="card-subtitle" style="margin-top:4px">Flights · Hotels · Activities · Food</div>
+                <div style="height:6px;background:var(--slate-100);border-radius:3px;margin-top:10px">
+                  <div style="height:100%;width:71%;background:var(--teal-600);border-radius:3px"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-secondary);margin-top:4px">
+                  <span>$0</span>
+                  <span style="color:var(--teal-600);font-weight:600">$2,840 of $4,000</span>
+                  <span>$4,000</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-settled">
+              <div class="card-header">
+                <div class="card-type">🛂 Compliance</div>
+              </div>
+              <div class="card-body">
+                <span class="compliance-badge compliance-pass" style="margin:0 0 6px">✓ E-visa available for your passport</span><br>
+                <span class="compliance-badge compliance-pass" style="margin:0">✓ Passport valid — 14 months remaining</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Booking failure state -->
+    <div class="mockup-card">
+      <div class="mockup-header">
+        <span class="dot" style="background:var(--amber-500)"></span>
+        Booking failure — amber transform
+      </div>
+      <div class="mockup-body">
+        <div class="phone-frame">
+          <div class="status-bar">
+            <div>
+              <div class="status-title">Your 10-day Vietnam trip</div>
+            </div>
+          </div>
+          <div style="padding:12px 16px;background:var(--warm-white)">
+
+            <!-- Unavailable card — amber transform -->
+            <div style="background:white;border-radius:16px;overflow:hidden;border:1.5px solid #FCD34D;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="card-header" style="background:#FFFBEB">
+                <div class="card-type">🏨 Hanoi Hotel</div>
+                <button class="card-edit-btn" style="background:var(--amber-50);color:#D97706">✏️</button>
+              </div>
+              <div class="avail-amber-bar">
+                <span>⚠️</span>
+                <span><strong>This exact option is no longer available.</strong></span>
+              </div>
+              <div class="card-body">
+                <div class="card-title" style="color:var(--text-secondary);text-decoration:line-through">Sofitel Legend Metropole</div>
+                <div class="card-subtitle">Fully booked · Jun 14–17</div>
+              </div>
+            </div>
+
+            <!-- Bot response -->
+            <div class="bubble-row">
+              <div class="avatar">S</div>
+              <div class="bubble bot" style="max-width:280px">
+                The Metropole is fully booked for your dates. But I know exactly why you chose it — the French Quarter location, the colonial feel, proximity to Hoàn Kiếm. Here are three alternatives that match all three reasons:
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:8px;margin:10px 0 10px 36px">
+              <div style="background:white;border:1px solid var(--slate-200);border-radius:10px;padding:10px 12px;font-size:12px">
+                <div style="font-weight:700">Same soul, different address</div>
+                <div style="color:var(--text-secondary)">Capella Hanoi · 2 blocks away</div>
+                <div style="color:var(--teal-600);font-weight:700;margin-top:4px">$156/night · <span class="avail-badge avail-high" style="font-size:10px">● Available</span></div>
+              </div>
+              <div style="background:white;border:1px solid var(--slate-200);border-radius:10px;padding:10px 12px;font-size:12px">
+                <div style="font-weight:700">Same address, different scale</div>
+                <div style="color:var(--text-secondary)">Hanoi La Siesta Diamond · French Quarter</div>
+                <div style="color:var(--teal-600);font-weight:700;margin-top:4px">$89/night · <span class="avail-badge avail-high" style="font-size:10px">● Available</span></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     DIRECTION 5 — B2B Copilot Desktop
+═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="d5">
+  <div class="direction-label label-b2b">Direction 5 · B2B Desktop · Professional Copilot</div>
+  <div class="section-title">Travel Agent Copilot — Professional Slate</div>
+  <div class="section-sub">Desktop split-panel. Session list with status badges. Working draft vs. client-ready staging gate. Dense professional layout.</div>
+
+  <div class="hero-note">
+    <strong>What you're evaluating:</strong> Does the Professional Slate palette read as a credible work tool?
+    Are the four status badges (pending / confirmed / modified / flagged) legible at a glance?
+    Does the "Mark as client-ready" staging gate feel like the right control point?
+  </div>
+
+  <div class="mockup-card">
+    <div class="mockup-header">
+      <span class="dot" style="background:#60A5FA"></span>
+      B2B Desktop — Full Copilot View (1280px)
+    </div>
+    <div class="mockup-body">
+      <div class="desktop-frame">
+        <!-- Top bar -->
+        <div class="desktop-topbar">
+          <div class="topbar-logo">STravel Copilot</div>
+          <div class="topbar-meta">Agent: Nguyen Thi Lan · TechVify Travel · 8 active sessions</div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:12px;color:rgba(255,255,255,0.5)">Today: 12 sessions</span>
+            <div class="topbar-avatar">NL</div>
+          </div>
+        </div>
+
+        <div class="desktop-body">
+          <!-- Session panel -->
+          <div class="session-panel">
+            <div class="session-panel-header">
+              <span class="session-panel-title">Sessions</span>
+              <button class="new-session-btn">+ New</button>
+            </div>
+            <div class="session-list">
+
+              <div class="session-row active">
+                <div class="session-row-top">
+                  <span class="session-name">Minh T. · Family of 4</span>
+                  <span class="session-date">Today</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span class="session-dest">Hanoi + Hội An · 12 days</span>
+                  <span class="status-badge status-modified">↻ Modified</span>
+                </div>
+              </div>
+
+              <div class="session-row">
+                <div class="session-row-top">
+                  <span class="session-name">Sarah K. · Honeymoon</span>
+                  <span class="session-date">Yesterday</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span class="session-dest">Da Nang + Hội An · 7 days</span>
+                  <span class="status-badge status-confirmed">✓ Confirmed</span>
+                </div>
+              </div>
+
+              <div class="session-row">
+                <div class="session-row-top">
+                  <span class="session-name">David L. · Solo</span>
+                  <span class="session-date">2 days ago</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span class="session-dest">Ho Chi Minh + Mekong</span>
+                  <span class="status-badge status-flagged">⚠ Flagged</span>
+                </div>
+              </div>
+
+              <div class="session-row">
+                <div class="session-row-top">
+                  <span class="session-name">Priya R. · Group 6</span>
+                  <span class="session-date">3 days ago</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span class="session-dest">Ha Long Bay + Ninh Bình</span>
+                  <span class="status-badge status-pending">◷ Pending</span>
+                </div>
+              </div>
+
+              <div class="session-row">
+                <div class="session-row-top">
+                  <span class="session-name">Tom W. · Business</span>
+                  <span class="session-date">4 days ago</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span class="session-dest">Hanoi · 4 days</span>
+                  <span class="status-badge status-confirmed">✓ Confirmed</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Workspace -->
+          <div class="workspace">
+            <div class="workspace-header">
+              <div>
+                <div class="client-name">Minh T. — Family of 4</div>
+                <div class="client-meta">Hanoi + Hội An · 12 days · Jun 20 – Jul 2 · Budget $8,000 · 2 adults, 2 children (7, 10)</div>
+              </div>
+              <div class="workspace-actions">
+                <button class="action-btn">Export PDF</button>
+                <button class="action-btn">Share link</button>
+                <button class="action-btn primary">Mark client-ready →</button>
+              </div>
+            </div>
+
+            <!-- Staging banner -->
+            <div class="staging-banner">
+              <span class="staging-icon">📋</span>
+              <span class="staging-text"><strong>Working draft.</strong> Hotel availability changed — Metropole Hanoi unavailable Jun 20–23. Review and select alternative before presenting to client.</span>
+              <button class="staging-btn">Review change</button>
+            </div>
+
+            <!-- Itinerary cards -->
+            <div class="b2b-card">
+              <div class="b2b-card-title">Itinerary Overview</div>
+
+              <div class="b2b-itinerary-row">
+                <div class="b2b-day-num">1–3</div>
+                <div class="b2b-day-content">
+                  <div class="b2b-day-title">Hanoi — Old Quarter & Culture</div>
+                  <div class="b2b-day-sub">Hoàn Kiếm · Temple of Literature · street food tour</div>
+                </div>
+                <div class="b2b-day-price">$420</div>
+              </div>
+
+              <div class="b2b-itinerary-row">
+                <div class="b2b-day-num">4–7</div>
+                <div class="b2b-day-content">
+                  <div class="b2b-day-title">Hội An — Slow days & Lanterns</div>
+                  <div class="b2b-day-sub">Ancient Town · cooking class · My Sơn day trip</div>
+                </div>
+                <div class="b2b-day-price">$680</div>
+              </div>
+
+              <div class="b2b-itinerary-row" style="border-bottom:none">
+                <div class="b2b-day-num">8–12</div>
+                <div class="b2b-day-content">
+                  <div class="b2b-day-title">Hồ Chí Minh City & Mekong</div>
+                  <div class="b2b-day-sub">Cu Chi tunnels · Mekong Delta · Ben Thành</div>
+                </div>
+                <div class="b2b-day-price">$890</div>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div class="b2b-card">
+                <div class="b2b-card-title">Budget Summary</div>
+                <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
+                  <div style="display:flex;justify-content:space-between"><span>Flights</span><span style="font-weight:700">$2,840</span></div>
+                  <div style="display:flex;justify-content:space-between"><span>Hotels (12 nights)</span><span style="font-weight:700">$1,920</span></div>
+                  <div style="display:flex;justify-content:space-between"><span>Activities</span><span style="font-weight:700">$680</span></div>
+                  <div style="display:flex;justify-content:space-between"><span>Food estimate</span><span style="font-weight:700">$480</span></div>
+                  <div style="height:1px;background:var(--slate-200);margin:4px 0"></div>
+                  <div style="display:flex;justify-content:space-between;font-weight:700;font-size:14px"><span>Total</span><span style="color:var(--blue-800)">$5,920</span></div>
+                  <div style="font-size:11px;color:var(--green-600)">$2,080 under budget</div>
+                </div>
+              </div>
+              <div class="b2b-card">
+                <div class="b2b-card-title">Compliance</div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <span class="compliance-badge compliance-pass" style="margin:0">✓ E-visa — family of 4 eligible</span>
+                  <span class="compliance-badge compliance-pass" style="margin:0">✓ All passports valid 6m+</span>
+                  <span class="compliance-badge compliance-pass" style="margin:0">✓ Children travel docs OK</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     DIRECTION 6 — Color Comparison
+═══════════════════════════════════════════════════════════════ -->
+<section class="section" id="d6">
+  <div class="direction-label label-states">Direction 6 · Color System · Teal vs Jade</div>
+  <div class="section-title">Color System — Full Palette</div>
+  <div class="section-sub">Mary's Vietnam-specificity challenge: teal-600 vs jade green. Full token set for both B2C themes and the B2B palette.</div>
+
+  <div class="hero-note">
+    <strong>The open decision:</strong> Teal-600 (#0D9488) was committed in Step 8 party mode.
+    Mary challenged it: jade green (#1B6B5A) makes a Vietnam-specific cultural claim that teal does not.
+    <strong>This is the one color decision still open</strong> — confirm teal or switch to jade before Step 10.
+  </div>
+
+  <div style="margin-bottom:24px">
+    <div style="font-size:14px;font-weight:700;margin-bottom:12px;color:#F1F5F9">B2C Option A — Teal-600 Primary (Sally's commitment)</div>
+    <div class="color-swatch-row">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0D9488"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Teal-600</div>
+          <div class="swatch-hex">#0D9488</div>
+          <div class="swatch-note">B2C primary · CTAs · links</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F59E0B"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Amber-500</div>
+          <div class="swatch-hex">#F59E0B</div>
+          <div class="swatch-note">Dominant accent · shimmer · progress</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FAFAF9;border:1px solid #E2E8F0"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Warm Off-White</div>
+          <div class="swatch-hex">#FAFAF9</div>
+          <div class="swatch-note">B2C surface · page background</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0F766E"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Teal-700</div>
+          <div class="swatch-hex">#0F766E</div>
+          <div class="swatch-note">CTA hover state</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:24px">
+    <div style="font-size:14px;font-weight:700;margin-bottom:12px;color:#4ADE80">B2C Option B — Vietnamese Jade (Mary's challenger)</div>
+    <div class="color-swatch-row">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1B6B5A"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Jade-600</div>
+          <div class="swatch-hex">#1B6B5A</div>
+          <div class="swatch-note">Vietnam-specific · temple jade · lacquerware</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F59E0B"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Amber-500</div>
+          <div class="swatch-hex">#F59E0B</div>
+          <div class="swatch-note">Dominant accent (unchanged)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FAFAF9;border:1px solid #E2E8F0"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Warm Off-White</div>
+          <div class="swatch-hex">#FAFAF9</div>
+          <div class="swatch-note">Surface (unchanged)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#155247"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Jade-700</div>
+          <div class="swatch-hex">#155247</div>
+          <div class="swatch-note">CTA hover state</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div style="margin-bottom:24px">
+    <div style="font-size:14px;font-weight:700;margin-bottom:12px;color:#60A5FA">B2B Professional Slate — same tokens, cooler register</div>
+    <div class="color-swatch-row">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1E40AF"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Blue-800</div>
+          <div class="swatch-hex">#1E40AF</div>
+          <div class="swatch-note">B2B primary · topbar · CTAs</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#64748B"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Slate-500</div>
+          <div class="swatch-hex">#64748B</div>
+          <div class="swatch-note">B2B accent · metadata</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F8FAFC;border:1px solid #E2E8F0"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Cool White</div>
+          <div class="swatch-hex">#F8FAFC</div>
+          <div class="swatch-note">B2B surface</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2563EB"></div>
+        <div class="swatch-body">
+          <div class="swatch-name">Blue-600</div>
+          <div class="swatch-hex">#2563EB</div>
+          <div class="swatch-note">Pending status badge · active session</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div style="font-size:14px;font-weight:700;margin-bottom:12px;color:#FBBF24">Status Badge System — B2B only</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <div style="background:#1E293B;border-radius:8px;padding:12px 16px;display:flex;flex-direction:column;gap:8px">
+        <span class="status-badge status-pending">◷ Pending</span>
+        <span class="status-badge status-confirmed">✓ Confirmed</span>
+        <span class="status-badge status-modified">↻ Modified</span>
+        <span class="status-badge status-flagged">⚠ Flagged</span>
+      </div>
+      <div style="font-size:12px;color:#94A3B8;max-width:360px;line-height:1.7;padding:8px 0">
+        Icon + label always. Never color alone (accessibility). Modified ≠ Flagged:
+        Modified = "something changed, review it." Flagged = "action blocked until resolved."<br><br>
+        Token layer: <code style="background:#0F172A;padding:2px 6px;border-radius:4px;font-size:11px">--color-status-*-bg</code> and
+        <code style="background:#0F172A;padding:2px 6px;border-radius:4px;font-size:11px">--color-status-*-fg</code>
+        declared in B2B theme scope only.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

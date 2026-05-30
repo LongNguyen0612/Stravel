@@ -22,6 +22,10 @@ class Settings(BaseSettings):
     llm_backend: str = "ollama"
     vllm_base_url: str = "http://localhost:8001"
 
+    # Passport OCR: "ollama" | "google_vision" | "textract"
+    passport_ocr_provider: str = "ollama"
+    vision_model: str = "llava:7b"
+
     model_config = {"env_file": ".env", "case_sensitive": False, "extra": "ignore"}
 
     @model_validator(mode="after")
