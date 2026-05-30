@@ -1,35 +1,22 @@
-# Phase 2+ services — extends docker-compose.yml
-# Usage: docker-compose -f docker-compose.full.yml up -d
-
-include:
-  - docker-compose.yml
+# Expose all dependency ports to the host.
+# Use this when backend + frontend run on macOS and dependencies run on Ubuntu:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.full.yml up -d
+#
+# macOS backend/.env should point to <ubuntu-tailscale-ip>:
+#   DATABASE_URL=postgresql://stravel:stravel_dev@100.79.32.101:5434/stravel
+#   REDIS_URL=redis://100.79.32.101:6380
+#   OLLAMA_BASE_URL=http://100.79.32.101:11434
 
 services:
-  qdrant:
-    image: qdrant/qdrant:latest
+  db:
     ports:
-      - "6333:6333"
-      - "6334:6334"
-    volumes:
-      - qdrant_data:/qdrant/storage
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:6333/readyz || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - "5434:5432"
+
+  ollama:
+    ports:
+      - "11434:11434"
 
   redis:
-    image: redis:7-alpine
     ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
-
-volumes:
-  qdrant_data:
-  redis_data:
+      - "6380:6379"
